@@ -27,8 +27,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tasks = [NSMutableArray arrayWithObjects:@"Task 1",  @"Task 2", @"Task 3", @"Task 4", nil];
-    self.taskColors = [NSMutableArray arrayWithObjects:[UIColor blackColor], [UIColor blackColor], [UIColor blackColor], [UIColor blackColor], nil];
+    self.tasks = [NSMutableArray new];
+    self.taskColors = [NSMutableArray new];
+
+    for (int i = 0; i < 20; i++) {
+        [self.tasks addObject:[NSString stringWithFormat:@"Task %d", i]];
+        [self.taskColors addObject:[UIColor blackColor]];
+    }
+
     self.isEditing = NO;
 
     [self.swipeGesture setDirection:(UISwipeGestureRecognizerDirectionRight)];
