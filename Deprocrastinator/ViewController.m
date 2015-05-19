@@ -20,7 +20,7 @@
 
 @property NSArray *priorityColors;
 @property NSIndexPath *selectedCellPath;
-@property BOOL isEditing;
+@property (nonatomic, getter=isEditing) BOOL editing;
 @end
 
 @implementation ViewController
@@ -35,11 +35,8 @@
         [self.taskColors addObject:[UIColor blackColor]];
     }
 
-    self.isEditing = NO;
-
+    self.editing = NO;
     [self.swipeGesture setDirection:(UISwipeGestureRecognizerDirectionRight)];
-
-
     self.priorityColors = @[[UIColor blackColor], [UIColor redColor], [UIColor yellowColor], [UIColor greenColor]];
 }
 
@@ -49,12 +46,11 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:swipeLocation];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
 
-
     UIColor *currentColor = cell.textLabel.textColor;
     NSUInteger currentColorIndex = [self.priorityColors indexOfObject:currentColor];
 
-    UIColor *nextColor = [self.priorityColors objectAtIndex:(currentColorIndex + 1) % self.priorityColors.count];
-
+    UIColor *nextColor = [self.priorityColors objectAtIndex:(currentColorIndex + 1) % self.priorityColors.count]; //amazing!
+    //NSLog(@"%lu %% %lu = %lu", currentColorIndex+1, self.priorityColors.count, (currentColorIndex + 1) % self.priorityColors.count);
     cell.textLabel.textColor = nextColor;
 
     [self.taskColors replaceObjectAtIndex:indexPath.row withObject:nextColor];
@@ -84,7 +80,7 @@
         [sender setTitle:@"Edit" forState:UIControlStateNormal];
     }
 
-    self.isEditing = !self.isEditing;
+    self.editing = !self.editing;
 }
 
 
